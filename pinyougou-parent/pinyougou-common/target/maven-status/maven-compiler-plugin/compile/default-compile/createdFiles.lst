@@ -1,0 +1,7 @@
+utils\PhoneFormatCheckUtils.class
+utils\HttpClient.class
+utils\CookieUtil.class
+utils\HttpClient$1.class
+utils\FastDFSClient.class
+com\pinyougou\vo\UsersStatus.class
+utils\IdWorker.class

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <!-- 以下页面不被拦截 -->
+    <http pattern="/*.html" security="none"></http>
+    <http pattern="/css/**" security="none"></http>
+    <http pattern="/img/**" security="none"></http>
+    <http pattern="/js/**" security="none"></http>
+    <http pattern="/plugins/**" security="none"></http>
+
+    <!-- 页面拦截规则 -->
+    <!--always-use-default-target="true"设置访问默认页面，防止访问到没有登录之前的页面-->
+    <http use-expressions="false">
+        <intercept-url pattern="/**" access="ROLE_ADMIN" />
+        <form-login login-page="/login.html"  default-target-url="/admin/index.html" authentication-failure-url="/login.html" always-use-default-target="true"/>
+        <csrf disabled="true"/>
+        <!--内置框架页解开-->
+        <headers>
+            <frame-options policy="SAMEORIGIN"/>
+        </headers>
+        <logout/>
+        <!--自动产生一个/logout，logout-success-url不配置默认跳到登录页-->
+    </http>
+
+    <!-- 认证管理器 -->
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="123456" authorities="ROLE_ADMIN"/>
+                <user name="sunwukong" password="dasheng" authorities="ROLE_ADMIN"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>
